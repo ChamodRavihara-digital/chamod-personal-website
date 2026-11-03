@@ -1,0 +1,27 @@
+export const ventures = [
+  {
+    slug: "wegot-digital",
+    name: "WEGOT Digital",
+    line: "Performance agency — Meta and Google Ads, conversion tracking and social media for growing brands.",
+    role: "The team behind bigger retainers.",
+    colors: { bg: "teal", accent: "signal" },
+    logo: "/logos/wegot-digital.png",
+    loop: "/video/wegot-intro.gif",
+    poster: "/images/wegot-intro-poster.jpg",
+    button: "Visit WEGOT Digital",
+    href: "/wegot-digital",
+  },
+  {
+    slug: "sozo-visuals",
+    name: "SOZO Visuals",
+    line: "Video content studio — reels, product films and ad creative built to perform.",
+    role: "In-house video production.",
+    colors: { bg: "sozo-black", accent: "sozo-yellow" },
+    logo: "/logos/sozo-visuals.svg",
+    loop: "/video/chamod-case-study-reel.mp4",
+    poster: "/images/case-study-reel-poster.jpg",
+    reelUrl: "/sozo-visuals#reels",
+    button: "Watch the reel",
+    href: "/sozo-visuals",
+  },
+];

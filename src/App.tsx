@@ -1,0 +1,229 @@
+import React, { useState, useEffect } from "react";
+import { Nav } from "./components/Nav";
+import { Footer } from "./components/Footer";
+import { ConsentBanner } from "./components/ConsentBanner";
+import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
+import { HomeView } from "./views/HomeView";
+import { WorkIndexView } from "./views/WorkIndexView";
+import { CaseStudyDetailView } from "./views/CaseStudyDetailView";
+import { ServicesView } from "./views/ServicesView";
+import { PortfolioView } from "./views/PortfolioView";
+import { AboutView } from "./views/AboutView";
+import { WegotDigitalView } from "./views/WegotDigitalView";
+import { SozoVisualsView } from "./views/SozoVisualsView";
+import { ContactView } from "./views/ContactView";
+import { HealthCheckView } from "./views/HealthCheckView";
+import { NotFoundView } from "./views/NotFoundView";
+import { caseStudies } from "../content/work";
+import { runDailyAutoSEO } from "./utils/seoEngine";
+import { AutoSEOModal } from "./components/AutoSEOModal";
+
+// Helper to set or create dynamic meta tags in <head>
+function setMetaTag(selector: string, attribute: string, value: string) {
+  if (typeof document === "undefined") return;
+  let element = document.querySelector(selector);
+  if (!element) {
+    if (selector.startsWith("meta[")) {
+      element = document.createElement("meta");
+      const nameMatch = selector.match(/name="([^"]+)"/);
+      const propMatch = selector.match(/property="([^"]+)"/);
+      if (nameMatch) element.setAttribute("name", nameMatch[1]);
+      if (propMatch) element.setAttribute("property", propMatch[1]);
+      document.head.appendChild(element);
+    } else if (selector.startsWith("link[")) {
+      element = document.createElement("link");
+      const relMatch = selector.match(/rel="([^"]+)"/);
+      if (relMatch) element.setAttribute("rel", relMatch[1]);
+      document.head.appendChild(element);
+    }
+  }
+  if (element) {
+    element.setAttribute(attribute, value);
+  }
+}
+
+function updatePageSEO(title: string, description: string, path: string) {
+  if (typeof document === "undefined") return;
+  document.title = title;
+
+  setMetaTag('meta[name="description"]', "content", description);
+  setMetaTag('meta[name="title"]', "content", title);
+  setMetaTag('meta[property="og:title"]', "content", title);
+  setMetaTag('meta[property="og:description"]', "content", description);
+  setMetaTag('meta[name="twitter:title"]', "content", title);
+  setMetaTag('meta[name="twitter:description"]', "content", description);
+
+  const canonicalUrl = `https://www.chamod.digital${path === "/" ? "" : path}`;
+  setMetaTag('meta[property="og:url"]', "content", canonicalUrl);
+  setMetaTag('link[rel="canonical"]', "href", canonicalUrl);
+}
+
+export default function App() {
+  const [currentPath, setCurrentPath] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      return window.location.pathname || "/";
+    }
+    return "/";
+  });
+  const [seoModalOpen, setSeoModalOpen] = useState(false);
+
+  const navigate = (href: string) => {
+    if (href.startsWith("http://") || href.startsWith("https://") || href.startsWith("mailto:") || href.startsWith("tel:")) {
+      window.open(href, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    if (href !== currentPath) {
+      window.history.pushState(null, "", href);
+      setCurrentPath(href);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname || "/");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  // Sync document.title and dynamic SEO metadata based on route
+  useEffect(() => {
+    const path = currentPath;
+    if (path === "/" || path === "") {
+      updatePageSEO(
+        "Chamod Ravihara — Performance Marketing Strategist | Meta & Google Ads",
+        "Scale your brand with data-backed performance advertising across Meta, Google, and TikTok Ads. Full-funnel media buying, Conversions API tracking, and high-ROAS strategy.",
+        "/"
+      );
+    } else if (path === "/work") {
+      updatePageSEO(
+        "Selected Work & Case Studies — Chamod Ravihara",
+        "Proven performance marketing case studies, ROAS scaling, and acquisition data across e-commerce retail, tracking infrastructure, and international education.",
+        "/work"
+      );
+    } else if (path.startsWith("/work/")) {
+      const slug = path.replace("/work/", "").split("/")[0];
+      const found = caseStudies.find((c) => c.slug === slug);
+      if (found) {
+        updatePageSEO(
+          `${found.title} | Case Study — Chamod Ravihara`,
+          `${found.client} (${found.category}): Achieved ${found.headlineMetric.value} ${found.headlineMetric.label}. ${found.sections.strategy || "Performance marketing strategy and full-funnel media buying."}`,
+          `/work/${slug}`
+        );
+      } else {
+        updatePageSEO(
+          "Case Study Details — Chamod Ravihara",
+          "Deep-dive performance marketing case study covering media buying strategy, campaign optimization, and measurable revenue scaling.",
+          path
+        );
+      }
+    } else if (path === "/services") {
+      updatePageSEO(
+        "Performance Marketing Services & Tracking Architecture — Chamod Ravihara",
+        "Core performance marketing services: Full-Funnel Paid Acquisition, Server-Side Conversions API Tracking, GA4 Attribution, and Creative Ad Strategy.",
+        "/services"
+      );
+    } else if (path === "/portfolio") {
+      updatePageSEO(
+        "Real Results & Creatives Portfolio — Chamod Ravihara",
+        "Real Meta Ads results, conversion tracking setups and social media creatives from live client accounts across Sri Lanka, Australia and Italy.",
+        "/portfolio"
+      );
+    } else if (path === "/about") {
+      updatePageSEO(
+        "About Chamod Ravihara — Background, Credentials & Philosophy",
+        "Certified Performance Marketing Strategist with 4+ years scaling 35+ brands across Sri Lanka, Australia, Maldives, and UK with data-driven advertising.",
+        "/about"
+      );
+    } else if (path === "/wegot-digital") {
+      updatePageSEO(
+        "WEGOT Digital — Performance Media & Scale Agency",
+        "WEGOT Digital is a growth marketing agency engineered by Chamod Ravihara to deliver predictable ROI and full-funnel media buying for scaling brands.",
+        "/wegot-digital"
+      );
+    } else if (path === "/sozo-visuals") {
+      updatePageSEO(
+        "SOZO Visuals — High-Impact Commercial Video & Ad Creative Studio",
+        "SOZO Visuals crafts direct response product films, thumb-stopping social video hooks, and cinematic commercial cuts built to convert cold audiences.",
+        "/sozo-visuals"
+      );
+    } else if (path === "/health-check") {
+      updatePageSEO(
+        "Free Ad Health Check — Score Your Facebook & Meta Ads | Chamod Ravihara",
+        "Answer 5 quick questions and get a free score out of 100 for your Meta ads — tracking, creative, retargeting and campaign setup — plus the top fixes to improve results.",
+        "/health-check"
+      );
+    } else if (path === "/contact") {
+      updatePageSEO(
+        "Book a Growth Strategy Call — Chamod Ravihara",
+        "Schedule a 1-on-1 performance audit or growth consultation with Chamod Ravihara. Open for high-growth brands and new projects.",
+        "/contact"
+      );
+    } else {
+      updatePageSEO(
+        "Page Not Found (404) — Chamod Ravihara",
+        "The requested page could not be found. Explore Chamod Ravihara's performance marketing portfolio, case studies, and services.",
+        path
+      );
+    }
+
+    // Run automated daily SEO engine (stamping lastmod, breadcrumbs schema, and sync stats)
+    runDailyAutoSEO(path);
+  }, [currentPath]);
+
+  // Route matching
+  let view = <NotFoundView onNavigate={navigate} />;
+
+  if (currentPath === "/" || currentPath === "") {
+    view = <HomeView onNavigate={navigate} />;
+  } else if (currentPath === "/work") {
+    view = <WorkIndexView onNavigate={navigate} />;
+  } else if (currentPath.startsWith("/work/")) {
+    const slug = currentPath.replace("/work/", "").split("/")[0];
+    view = <CaseStudyDetailView slug={slug} onNavigate={navigate} />;
+  } else if (currentPath === "/services") {
+    view = <ServicesView onNavigate={navigate} />;
+  } else if (currentPath === "/portfolio") {
+    view = <PortfolioView onNavigate={navigate} />;
+  } else if (currentPath === "/about") {
+    view = <AboutView onNavigate={navigate} />;
+  } else if (currentPath === "/wegot-digital") {
+    view = <WegotDigitalView onNavigate={navigate} />;
+  } else if (currentPath === "/sozo-visuals") {
+    view = <SozoVisualsView onNavigate={navigate} />;
+  } else if (currentPath === "/health-check") {
+    view = <HealthCheckView onNavigate={navigate} />;
+  } else if (currentPath === "/contact") {
+    view = <ContactView onNavigate={navigate} />;
+  }
+
+  return (
+    <div className="relative min-h-screen bg-white text-[#1d1d1f] flex flex-col font-sans">
+      {/* 2. Sticky Navigation */}
+      <Nav currentPath={currentPath} onNavigate={navigate} />
+
+      {/* 3. Main Page View Content */}
+      <div className="flex-1 w-full">{view}</div>
+
+      {/* 4. Footer */}
+      <Footer onNavigate={navigate} onOpenSEOModal={() => setSeoModalOpen(true)} />
+
+      {/* 5. Minimal Consent Banner */}
+      <ConsentBanner />
+
+      {/* 6. Always Present Floating Contact (WhatsApp) Button */}
+      <FloatingWhatsApp />
+
+      {/* 7. Daily Auto-SEO Engine Inspector Modal */}
+      <AutoSEOModal
+        isOpen={seoModalOpen}
+        onClose={() => setSeoModalOpen(false)}
+        currentPath={currentPath}
+      />
+    </div>
+  );
+}
