@@ -129,7 +129,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
           className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,#f1f3fb_0%,#f1f3fb_16%,rgba(241,243,251,0.75)_30%,rgba(241,243,251,0)_52%)]"
         />
 
-        <div className="relative max-w-[1320px] mx-auto px-[22px] lg:px-16 xl:px-24 pt-10 sm:pt-16 lg:pt-0 lg:min-h-[calc(125vh-52px)] lg:max-h-[1000px] lg:flex lg:items-center">
+        <div className="relative px-[22px] lg:px-[8vw] pt-10 sm:pt-16 lg:pt-0 lg:min-h-[calc(125vh-52px)] lg:max-h-[1000px] lg:flex lg:items-center">
           <div className="text-center lg:text-left max-w-[600px] lg:max-w-none lg:w-[46%] mx-auto lg:mx-0 lg:py-24">
             <a
               href="/health-check"
