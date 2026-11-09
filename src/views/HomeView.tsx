@@ -10,6 +10,7 @@ import { creatives } from "../../content/proof";
 import { CaseCard } from "../components/CaseCard";
 import { CTABlock } from "../components/CTABlock";
 import { Button, ChevronLink } from "../components/Button";
+import { PlatformRow } from "../components/PlatformRow";
 import { AnimatedCounter } from "../components/AnimatedCounter";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 
@@ -115,32 +116,84 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
 
   return (
     <main className="w-full pt-[52px]">
-      {/* 1. Hero */}
-            <section className="bg-[#f5f5f7] text-center pt-16 sm:pt-24 pb-20 sm:pb-28 overflow-hidden">
-        <div className="ap-wrap">
-          <a
-            href="/health-check"
-            onClick={go("/health-check")}
-            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 mb-8 text-[14px] text-[#1d1d1f] shadow-[0_2px_10px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] transition-shadow"
-          >
-            <span className="rounded-full bg-[#0071e3] text-white text-[11px] font-semibold px-2 py-0.5">Free</span>
-            How healthy are your ads? Get your score
-            <span className="text-[#0066cc]" aria-hidden="true">›</span>
-          </a>
-          <p className="ap-eyebrow text-[#bf4800] mb-3">Performance Marketing Strategist</p>
-          <h1 className="ap-hero text-[#1d1d1f] mx-auto max-w-[14ch]">
-            Digital marketing with a human touch.
-          </h1>
-          <p className="ap-sub text-[#424245] mt-6 mx-auto max-w-[32ch]">
-            Meta, TikTok and Google Ads, built on clean tracking — so every rupee shows up as measurable revenue.
-          </p>
-          <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" href="/contact" onClick={go("/contact")}>
-              Book a strategy call
-            </Button>
-            <Button size="lg" variant="secondaryLight" href="/work" onClick={go("/work")}>
-              View selected work
-            </Button>
+      {/* 1. Hero — light W + mountains artwork */}
+      <section className="relative overflow-hidden bg-[#f1f3fb]" aria-labelledby="hero-heading">
+        {/* Desktop: artwork fills the hero, text sits on the clear left side */}
+        <div
+          aria-hidden="true"
+          className="hidden lg:block absolute inset-y-0 right-0 left-[16%] bg-cover bg-no-repeat bg-[position:right_center]"
+          style={{ backgroundImage: "url(/images/hero-bg-light.jpg)" }}
+        />
+        <div
+          aria-hidden="true"
+          className="hidden lg:block absolute inset-0 bg-[linear-gradient(90deg,#f1f3fb_0%,#f1f3fb_16%,rgba(241,243,251,0.75)_30%,rgba(241,243,251,0)_52%)]"
+        />
+
+        <div className="relative max-w-[1320px] mx-auto px-[22px] lg:px-16 xl:px-24 pt-10 sm:pt-16 lg:pt-0 lg:min-h-[calc(125vh-52px)] lg:max-h-[1000px] lg:flex lg:items-center">
+          <div className="text-center lg:text-left max-w-[600px] lg:max-w-none lg:w-[46%] mx-auto lg:mx-0 lg:py-24">
+            <a
+              href="/health-check"
+              onClick={go("/health-check")}
+              className="inline-flex items-center gap-2 rounded-full bg-white/85 border border-black/[0.06] pl-1.5 pr-3.5 py-1.5 text-[13px] sm:text-[14px] text-[#1d1d1f] shadow-[0_2px_10px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] transition-shadow"
+            >
+              <span className="rounded-full bg-[#0071e3] text-white text-[11px] font-semibold px-2 py-0.5">Free</span>
+              <span className="sm:hidden">Get your ad health score</span>
+              <span className="hidden sm:inline">How healthy are your ads? Get your score</span>
+              <span className="text-[#0066cc]" aria-hidden="true">›</span>
+            </a>
+
+            <p className="mt-6 sm:mt-8 text-[12px] sm:text-[15px] font-semibold uppercase tracking-[0.2em] text-[#0071e3]">
+              Performance Marketing Strategist
+            </p>
+            <h1
+              id="hero-heading"
+              className="mt-3 sm:mt-4 text-[#1d1d1f] font-bold tracking-[-0.035em] leading-[1.05]"
+              style={{ fontSize: "clamp(38px, 5.2vw, 80px)" }}
+            >
+              <span className="lg:whitespace-nowrap">Digital marketing</span>{" "}
+              <br className="hidden lg:block" />
+              <span className="lg:whitespace-nowrap">with a human touch.</span>
+            </h1>
+            <p className="mt-4 sm:mt-6 text-[17px] sm:text-[21px] leading-[1.47] text-[#424245] max-w-[34ch] mx-auto lg:mx-0">
+              Meta, TikTok and Google Ads, built on clean tracking — so every rupee shows up as measurable revenue.
+            </p>
+
+            <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4">
+              <Button
+                size="lg"
+                href="/contact"
+                onClick={go("/contact")}
+                className="shadow-[0_10px_28px_rgba(0,113,227,0.28)]"
+              >
+                Book a strategy call
+                <span aria-hidden="true" className="ml-1.5">›</span>
+              </Button>
+              <Button size="lg" variant="secondaryLight" href="/work" onClick={go("/work")} className="bg-white/60">
+                <svg width="11" height="13" viewBox="0 0 14 16" aria-hidden="true" className="inline -mt-0.5 mr-2">
+                  <path d="M1 1.5v13l12-6.5z" fill="currentColor" />
+                </svg>
+                View selected work
+              </Button>
+            </div>
+
+            <PlatformRow className="mt-7 sm:mt-11 justify-center lg:justify-start" />
+          </div>
+        </div>
+
+        {/* Mobile & tablet: artwork as a banner under the text */}
+        <div
+          aria-hidden="true"
+          className="lg:hidden relative mt-6 h-[300px] sm:h-[420px] bg-no-repeat bg-cover bg-[position:70%_center]"
+          style={{ backgroundImage: "url(/images/hero-bg-light-mobile.jpg)" }}
+        >
+          <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#f1f3fb] to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
+        </div>
+
+        {/* Scroll cue (desktop) */}
+        <div aria-hidden="true" className="hidden lg:flex absolute left-1/2 -translate-x-1/2 bottom-8">
+          <div className="w-6 h-[38px] rounded-[13px] border-2 border-[#1d1d1f]/45 flex justify-center pt-[7px]">
+            <div className="w-[3px] h-[7px] rounded-sm bg-[#1d1d1f]/60 animate-bounce" />
           </div>
         </div>
       </section>
@@ -272,7 +325,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
               <p className="ap-eyebrow text-[#a1a1a6] mb-3">Real results</p>
               <h2 className="ap-headline max-w-[16ch]">
                 Straight from the ad accounts.
-                <span className="text-[#86868b] whitespace-nowrap"> No mock-ups.</span>
+                <span className="text-[#86868b]"> No mock-ups.</span>
               </h2>
             </div>
             <ChevronLink dark href="/portfolio" onClick={go("/portfolio")}>
