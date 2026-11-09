@@ -216,6 +216,19 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
         </div>
       </section>
 
+      {/* 2b. Certified by — right under the numbers */}
+      <section className="bg-white pt-2 sm:pt-4 pb-6" aria-label="Certified by">
+        <div className="ap-wrap text-center">
+          <p className="text-[17px] text-[#6e6e73] mb-8">Certified by</p>
+          <div className="flex justify-center">
+            <CertifiedLogos />
+          </div>
+        </div>
+      </section>
+
+      {/* 2c. Client logos */}
+      <BrandLogosMarquee />
+
       {/* 3. About — dark statement */}
       <section className="bg-black text-[#f5f5f7] ap-section" aria-label="About Chamod">
         <div className="ap-wrap-wide grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
@@ -390,19 +403,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
           })}
         </div>
       </section>
-
-      {/* 7. Certified by */}
-      <section className="bg-white pt-24 sm:pt-32 pb-6" aria-label="Certified by">
-        <div className="ap-wrap text-center">
-          <p className="text-[17px] text-[#6e6e73] mb-8">Certified by</p>
-          <div className="flex justify-center">
-            <CertifiedLogos />
-          </div>
-        </div>
-      </section>
-
-      {/* 8. Client logos */}
-      <BrandLogosMarquee />
 
       {/* 9. CTA */}
       <CTABlock onNavigate={onNavigate} />
