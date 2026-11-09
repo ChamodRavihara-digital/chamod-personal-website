@@ -36,12 +36,7 @@ export const CertifiedLogos: React.FC = () => {
         className="flex items-center gap-2 group transition-transform hover:scale-105"
         title="Meta Certified Digital Marketing Associate"
       >
-        <svg className="h-5 w-auto shrink-0" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M12 7.28c-2.4 0-4.46 1.48-5.46 3.65-.96-1.74-2.52-2.8-4.32-2.8C1.03 8.13 0 9.27 0 11.16c0 2.92 2.76 5.86 5.92 5.86 2.45 0 4.54-1.49 5.54-3.7.97 1.76 2.53 2.85 4.34 2.85 3.19 0 4.2-1.14 4.2-3.03 0-2.92-2.76-5.86-5.92-5.86h-2.08zm4.08 7.06c-1.39 0-2.61-.95-3.23-2.34.8-1.57 2.08-2.6 3.23-2.6 1.34 0 2.09.83 2.09 2.47 0 1.64-.75 2.47-2.09 2.47zm-8.16 0c-1.34 0-2.09-.83-2.09-2.47 0-1.64.75-2.47 2.09-2.47 1.15 0 2.43 1.03 3.23 2.6-.62 1.39-1.84 2.34-3.23 2.34z"
-            fill="#0668E1"
-          />
-        </svg>
+        <img src="/logos/platforms/meta.png" alt="" aria-hidden="true" className="h-[15px] w-auto shrink-0" />
         <span className="font-semibold text-[15px] sm:text-[16px] text-[#1d1d1f] tracking-tight">
           Meta <span className="font-medium text-[#6e6e73] text-[13px]">Certified</span>
         </span>

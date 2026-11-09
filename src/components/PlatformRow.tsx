@@ -9,7 +9,7 @@ const icons = {
 
 const platforms = [
   { label: "Meta Ads", d: icons.meta, size: "w-[22px] h-[22px] sm:w-6 sm:h-6" },
-  { label: "Google Ads", d: icons.googleAds, size: "w-[18px] h-[18px] sm:w-5 sm:h-5" },
+  { label: "Google Ads", d: icons.googleAds, size: "w-[18px] h-[18px] sm:w-5 sm:h-5", img: "/logos/platforms/google-ads.png" },
   { label: "TikTok Ads", d: icons.tiktok, size: "w-[17px] h-[17px] sm:w-[19px] sm:h-[19px]" },
 ];
 
@@ -20,9 +20,13 @@ export const PlatformRow: React.FC<{ className?: string }> = ({ className = "" }
       <React.Fragment key={p.label}>
         {i > 0 && <li aria-hidden="true" className="hidden min-[360px]:block w-px h-[18px] sm:h-6 bg-black/[0.18]" />}
         <li className={`flex items-center gap-[7px] sm:gap-2.5 whitespace-nowrap ${i === 0 ? "pr-3 sm:pr-5" : i === platforms.length - 1 ? "pl-3 sm:pl-5" : "px-3 sm:px-5"}`}>
-          <svg viewBox="0 0 24 24" className={p.size} aria-hidden="true">
-            <path fill="currentColor" d={p.d} />
-          </svg>
+          {"img" in p && p.img ? (
+            <img src={p.img} alt="" aria-hidden="true" className={`${p.size} object-contain`} />
+          ) : (
+            <svg viewBox="0 0 24 24" className={p.size} aria-hidden="true">
+              <path fill="currentColor" d={p.d} />
+            </svg>
+          )}
           {p.label}
         </li>
       </React.Fragment>
