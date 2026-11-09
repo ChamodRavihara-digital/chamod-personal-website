@@ -116,7 +116,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
   return (
     <main className="w-full pt-[52px]">
       {/* 1. Hero */}
-      <section className="bg-[#f5f5f7] text-center pt-16 sm:pt-24 overflow-hidden">
+            <section className="bg-[#f5f5f7] text-center pt-16 sm:pt-24 pb-20 sm:pb-28 overflow-hidden">
         <div className="ap-wrap">
           <a
             href="/health-check"
@@ -141,18 +141,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
             <Button size="lg" variant="secondaryLight" href="/work" onClick={go("/work")}>
               View selected work
             </Button>
-          </div>
-        </div>
-
-        <div className="ap-wrap-wide mt-14 sm:mt-20">
-          <div className="mx-auto max-w-[980px] rounded-t-[28px] overflow-hidden bg-[#f3f1ec] shadow-[0_30px_80px_rgba(0,0,0,0.12)]">
-            <img
-              src="/video/wegot-intro.gif"
-              alt="WEGOT Digital — We Got Your Digital Covered"
-              width={480}
-              height={270}
-              className="w-full aspect-[16/9] object-cover"
-            />
           </div>
         </div>
       </section>
