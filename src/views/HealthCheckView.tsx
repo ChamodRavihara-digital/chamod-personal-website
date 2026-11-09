@@ -4,6 +4,7 @@ import { site } from "../../content/site";
 import { questions, scoredQuestions, maxScore, bandFor, Area } from "../../content/healthCheck";
 import { Button } from "../components/Button";
 import { sendLead } from "../lib/web3forms";
+import { track } from "../lib/analytics";
 
 interface HealthCheckViewProps {
   onNavigate: (href: string) => void;
@@ -68,7 +69,10 @@ export const HealthCheckView: React.FC<HealthCheckViewProps> = ({ onNavigate }) 
     // short pause so the selection is visible, then advance
     setTimeout(() => {
       if (step < questions.length - 1) setStep((s) => s + 1);
-      else setStage("result");
+      else {
+        setStage("result");
+        track("health_check_complete");
+      }
     }, 220);
   };
 
@@ -99,7 +103,10 @@ export const HealthCheckView: React.FC<HealthCheckViewProps> = ({ onNavigate }) 
       botcheck,
     });
     setSending(false);
-    if (res.ok) setSent(true);
+    if (res.ok) {
+      setSent(true);
+      track("generate_lead", { lead_source: "ad_health_check", health_score: result.score });
+    }
     else setError("Sorry — that didn't send. Please try again, or send your score on WhatsApp.");
   };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Nav } from "./components/Nav";
 import { Footer } from "./components/Footer";
+import { trackPageView } from "./lib/analytics";
 import { ConsentBanner } from "./components/ConsentBanner";
 import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
 import { HomeView } from "./views/HomeView";
@@ -89,6 +90,17 @@ export default function App() {
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
+
+  // GTM: send a virtual page view on in-app navigation (after the title updates)
+  const firstView = React.useRef(true);
+  useEffect(() => {
+    if (firstView.current) {
+      firstView.current = false;
+      return;
+    }
+    const t = window.setTimeout(() => trackPageView(currentPath), 0);
+    return () => window.clearTimeout(t);
+  }, [currentPath]);
 
   // Sync document.title and dynamic SEO metadata based on route
   useEffect(() => {

@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import { site } from "../../content/site";
 import { Button, ChevronLink } from "../components/Button";
 import { sendLead } from "../lib/web3forms";
+import { track } from "../lib/analytics";
 
 interface ContactViewProps {
   onNavigate: (href: string) => void;
@@ -45,7 +46,10 @@ export const ContactView: React.FC<ContactViewProps> = () => {
       { fromName: "chamod.digital — Contact form", replyTo: formData.email, botcheck }
     );
     setLoading(false);
-    if (result.ok) setSubmitted(true);
+    if (result.ok) {
+      setSubmitted(true);
+      track("generate_lead", { lead_source: "contact_form", service_interest: formData.service });
+    }
     else setError("Sorry — the message didn't send. Please try again, or message me on WhatsApp.");
   };
 
