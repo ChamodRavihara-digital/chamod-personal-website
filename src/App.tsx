@@ -210,7 +210,7 @@ export default function App() {
       <div className="flex-1 w-full">{view}</div>
 
       {/* 4. Footer */}
-      <Footer onNavigate={navigate} onOpenSEOModal={() => setSeoModalOpen(true)} />
+      <Footer onNavigate={navigate} />
 
       {/* 5. Minimal Consent Banner */}
       <ConsentBanner />
